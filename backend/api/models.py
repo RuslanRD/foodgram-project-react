@@ -84,7 +84,7 @@ class Recipe(models.Model):
     ingredients = models.ManyToManyField(
         Ingredient,
         through='IngredientAmount',
-        verbose_name='Ингридиенты',
+        verbose_name='Ингредиенты',
         related_name='recipes',
     )
     tags = models.ManyToManyField(
@@ -111,7 +111,7 @@ class IngredientAmount(models.Model):
     ingredient = models.ForeignKey(
         Ingredient,
         on_delete=models.CASCADE,
-        verbose_name='Ингридиент',
+        verbose_name='Ингредиент',
     )
     recipe = models.ForeignKey(
         Recipe,
@@ -122,7 +122,7 @@ class IngredientAmount(models.Model):
         validators=(
             validators.MinValueValidator(
                 1,
-                message='Минимальное количество ингридиентов 1'
+                message='Минимальное количество ингредиентов 1'
             ),
         ),
         verbose_name='Количество',
@@ -130,8 +130,8 @@ class IngredientAmount(models.Model):
 
     class Meta:
         ordering = ['-id']
-        verbose_name = 'Количество ингридиента'
-        verbose_name_plural = 'Количество ингридиентов'
+        verbose_name = 'Количество ингредиента'
+        verbose_name_plural = 'Количество ингредиентов'
         constraints = [
             models.UniqueConstraint(
                 fields=['ingredient', 'recipe'],
