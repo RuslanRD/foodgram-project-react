@@ -70,7 +70,7 @@ class RecipeSerializer(serializers.ModelSerializer):
         return Recipe.objects.filter(cart__user=user, id=obj.id).exists()
 
     def validate(self, data):
-        ingredients = self.initial_data.get('ingredients')
+        ingredients = data.get('ingredients') 
         if not ingredients:
             raise serializers.ValidationError(
                 {'ingredients': 'Нужен хоть один ингридиент для рецепта'}
@@ -110,25 +110,19 @@ class RecipeSerializer(serializers.ModelSerializer):
         image = validated_data.pop('image')
         ingredients_data = validated_data.pop('ingredients')
         recipe = Recipe.objects.create(image=image, **validated_data)
-        tags_data = self.initial_data.get('tags')
+        tags_data = validated_data.get('tags')
         recipe.tags.set(tags_data)
         self.create_ingredients(ingredients_data, recipe)
         return recipe
 
     def update(self, instance, validated_data):
-        instance.image = validated_data.get('image', instance.image)
-        instance.name = validated_data.get('name', instance.name)
-        instance.text = validated_data.get('text', instance.text)
-        instance.cooking_time = validated_data.get(
-            'cooking_time', instance.cooking_time
-        )
         instance.tags.clear()
-        tags_data = self.initial_data.get('tags')
+        tags_data = validated_data.pop('tags')
         instance.tags.set(tags_data)
-        IngredientAmount.objects.filter(recipe=instance).all().delete()
+        IngredientAmount.objects.filter(recipe=instance).delete()
         self.create_ingredients(validated_data.get('ingredients'), instance)
-        instance.save()
-        return instance 
+        instance = super().update(validated_data, instance)
+        return instance
 
 
 class CropRecipeSerializer(serializers.ModelSerializer):

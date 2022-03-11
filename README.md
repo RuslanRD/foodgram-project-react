@@ -21,3 +21,6 @@ DB_HOST=db # название сервиса (контейнера)
 ```
 DB_PORT=5432 # порт для подключения к БД
 ```
+### Адрес проекта:
+http://178.154.225.6/recipes или
+http://foodgramrrd.hopto.org/recipes
