@@ -66,7 +66,7 @@ cd foodgram-project-react/infra
 ```
 sudo nano .env
 ```
-* Наполните .env следюущими данными:
+* Наполните .env следующими данными:
 ```
 DB_ENGINE=<django.db.backends.postgresql>
 DB_NAME=<имя базы данных postgres>
