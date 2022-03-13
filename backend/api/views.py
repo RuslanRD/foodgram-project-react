@@ -65,10 +65,12 @@ class RecipeViewSet(viewsets.ModelViewSet):
             permission_classes=[IsAuthenticated])
     def download_shopping_cart(self, request):
         final_list = {}
-        ingredients = IngredientAmount.objects.filter(
-            recipe__cart__user=request.user).values_list(
-            'ingredient__name', 'ingredient__measurement_unit',
-        ).annotate(amount=Sum('amount'))
+        ingredients = IngredientAmount.objects.values_list(
+            'ingredient__name',
+            'ingredient__measurement_unit'
+        ).annotate(amount=Sum('amount')).filter(
+            recipe__cart__user=request.user
+        )
         for item in ingredients:
             name = item[0]
             if name not in final_list:
