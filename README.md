@@ -89,7 +89,7 @@ sudo docker-compose exec backend python manage.py loaddata data/data_for_project
 sudo docker-compose exec backend python manage.py createsuperuser
 ```
 ### Адрес проекта:
-http://178.154.240.210/recipes или
+http://34.226.247.223/recipes или
 http://foodgramrrd.hopto.org/recipes
 ### Автор проекта:
 https://github.com/RuslanRD
